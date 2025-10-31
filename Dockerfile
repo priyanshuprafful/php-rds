@@ -1,28 +1,31 @@
-FROM php:8.1-apache-bullseye
+# Use official PHP image with Apache web server
+FROM php:8.2-apache
 
-RUN docker-php-ext-install mysqli \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /var/www/html
+# Install mysqli extension
+RUN docker-php-ext-install mysqli
+
+# Copy your PHP app files into the web server directory
 COPY . /var/www/html/
-RUN chown -R www-data:www-data /var/www/html
 
+# Expose port 80 to access the app in the browser
 EXPOSE 80
+
+# Start Apache server when the container runs
 CMD ["apache2-foreground"]
 
 
-# Use official PHP image with Apache web server
-# FROM php:8.2-apache
 
+# FROM php:8.1-apache-bullseye
 
-# # Install mysqli extension
-# RUN docker-php-ext-install mysqli
+# RUN docker-php-ext-install mysqli \
+#     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# # Copy your PHP app files into the web server directory
+# WORKDIR /var/www/html
 # COPY . /var/www/html/
+# RUN chown -R www-data:www-data /var/www/html
 
-# # Expose port 80 to access the app in the browser
 # EXPOSE 80
-
-# # Start Apache server when the container runs
 # CMD ["apache2-foreground"]
+
+
