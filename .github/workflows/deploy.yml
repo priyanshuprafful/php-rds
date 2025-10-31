@@ -28,8 +28,10 @@ jobs:
             echo "Stopping old container if running..."
             docker stop php-feedback-app || true
             docker rm php-feedback-app || true
+            
             echo "Removing old image..."
-            docker rmi php-feedback-app || true
+            docker image prune -af || true
+
             echo "Pulling latest code..."
             cd /home/centos
             rm -rf app || true
