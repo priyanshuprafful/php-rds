@@ -2,7 +2,13 @@
 .github/
 .gitignore
 README.md
-Dockerfile
+LICENSE
 *.pem
 *.key
 *.env
+node_modules/
+vendor/
+*.log
+*.tmp
+Dockerfile
+docker-compose.yml

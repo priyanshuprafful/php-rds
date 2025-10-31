@@ -1,14 +1,26 @@
-FROM php:8.2-apache-bookworm
+# 🐳 Use lightweight PHP 8.1 + Apache (Alpine-based)
+FROM php:8.1-apache-alpine
 
+# 🧩 Install mysqli extension for MySQL connection
 RUN docker-php-ext-install mysqli \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/cache/apk/* /tmp/*
 
+# 📂 Set working directory
 WORKDIR /var/www/html
+
+# 🚫 Clean default Apache HTML files (optional)
+RUN rm -rf /var/www/html/*
+
+# 📁 Copy your app code
 COPY . /var/www/html/
 
+# 🔒 Secure permissions
 RUN chown -R www-data:www-data /var/www/html
 
+# 🌐 Expose HTTP port
 EXPOSE 80
+
+# 🚀 Start Apache when container runs
 CMD ["apache2-foreground"]
 
 
