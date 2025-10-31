@@ -185,7 +185,7 @@ I’m currently exploring **Cloud, DevOps, and Full-Stack opportunities** — bo
 
 💬 Let’s connect on **LinkedIn**: [https://linkedin.com/in/priyanshu8787](https://linkedin.com/in/priyanshu8787)
 
-    Telegram: @priyanshuprafful(https://t.me/priyanshuprafful)
+   Telegram: @priyanshuprafful(https://t.me/priyanshuprafful)
     
 ⭐ Follow me for updates and future projects!
 
