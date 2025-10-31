@@ -12,10 +12,10 @@
   </form>
 
   <?php
-  $servername = "YOUR_RDS_ENDPOINT";
-  $username = "YOUR_DB_USERNAME";
-  $password = "YOUR_DB_PASSWORD";
-  $dbname = "YOUR_DB_NAME";
+  $servername = "php-feedback-db.cuxsgu24aww9.us-east-1.rds.amazonaws.com";
+  $username = "admin";
+  $password = "password";
+  $dbname = "feedbackdb";
 
   $conn = new mysqli($servername, $username, $password, $dbname);
 
