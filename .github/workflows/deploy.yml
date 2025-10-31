@@ -1,0 +1,46 @@
+name: Deploy PHP App to EC2
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t php-feedback-app .
+
+      - name: Copy code and deploy to EC2
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: centos
+          password: ${{ secrets.EC2_PASSWORD }}
+          script: |
+            echo "Stopping old container if running..."
+            docker stop php-feedback-app || true
+            docker rm php-feedback-app || true
+            echo "Removing old image..."
+            docker rmi php-feedback-app || true
+            echo "Pulling latest code..."
+            cd /home/centos
+            rm -rf app || true
+            mkdir app && cd app
+            git clone https://github.com/priyanshuprafful/php-rds.git .
+            echo "Building new image..."
+            docker build -t php-feedback-app .
+            echo "Running new container..."
+            docker run -d -p 80:80 --name php-feedback-app \
+              -e DB_HOST=${{ secrets.DB_HOST }} \
+              -e DB_USER=${{ secrets.DB_USER }} \
+              -e DB_PASS=${{ secrets.DB_PASS }} \
+              -e DB_NAME=feedbackdb \
+              php-feedback-app
