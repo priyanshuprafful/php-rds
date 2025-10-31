@@ -1,6 +1,10 @@
 # Use official PHP image with Apache web server
 FROM php:8.2-apache
 
+
+# Install mysqli extension
+RUN docker-php-ext-install mysqli
+
 # Copy your PHP app files into the web server directory
 COPY . /var/www/html/
 
