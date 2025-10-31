@@ -25,12 +25,13 @@ jobs:
           username: centos
           password: ${{ secrets.EC2_PASSWORD }}
           script: |
-            echo "Stopping old container if running..."
+            
+            echo "Cleaning up old containers and images..."
             docker stop php-feedback-app || true
             docker rm php-feedback-app || true
-            
-            echo "Removing old image..."
+            docker container prune -f || true
             docker image prune -af || true
+
 
             echo "Pulling latest code..."
             cd /home/centos
