@@ -1,26 +1,14 @@
-# 🐳 Use lightweight Alpine-based PHP + Apache image
-FROM php:8.2-apache-alpine
+FROM php:8.2-apache-bookworm
 
-# 🧰 Install required PHP extensions (mysqli) for MySQL connection
 RUN docker-php-ext-install mysqli \
-    && rm -rf /var/cache/apk/* /tmp/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# ⚙️ Configure Apache to use /var/www/html as DocumentRoot
 WORKDIR /var/www/html
-
-# 🚫 Remove default Apache files (optional cleanup)
-RUN rm -rf /var/www/html/*
-
-# 📁 Copy your app code into the container
 COPY . /var/www/html/
 
-# 🔒 Set secure permissions
 RUN chown -R www-data:www-data /var/www/html
 
-# 🌐 Expose port 80 for web traffic
 EXPOSE 80
-
-# 🚀 Start Apache automatically
 CMD ["apache2-foreground"]
 
 
